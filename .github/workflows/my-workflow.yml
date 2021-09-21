@@ -26,8 +26,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Print output
         run: |
-          echo ${{ needs.prepare.outputs.key1 }}
-          echo ${{ needs.prepare.outputs.key2 }}
+          echo "${{ needs.prepare.outputs.key1 }}"
+          echo "${{ needs.prepare.outputs.key2 }}"
         - name: Test Application
           run: echo ${{ secrets[format{'{0}_A', 'MASTER'}] }}
         - name: Test Application 2
