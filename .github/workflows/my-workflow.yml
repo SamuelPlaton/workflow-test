@@ -30,7 +30,7 @@ jobs:
     needs: prepare
     runs-on: ubuntu-20.04
     env:
-      TEST: needs.prepare.outputs.key1
+      TEST: test-workflow
     steps:
       - name: Print output
         run: |
