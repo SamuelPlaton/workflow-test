@@ -20,7 +20,7 @@ jobs:
           echo ${{ github.ref }}
           echo ${GITHUB_REF##*/}
           echo "::set-output name=key1::${{ github.base_ref }}";
-          echo "::set-output name=key2::github.base_ref";
+          echo "::set-output name=key2::${GITHUB_REF##*/}";
           echo "::set-output name=key3::TEST";
     outputs:
       key1: ${{ steps.prepare-step.outputs.key1 }}
