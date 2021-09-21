@@ -29,10 +29,10 @@ jobs:
           echo "${{ needs.prepare.outputs.key1 }}"
           echo "${{ needs.prepare.outputs.key2 }}"
       - name: Test Application
-        run: echo ${{ secrets[format{'{0}_A', 'MASTER'}] }}
+        run: echo ${{ secrets[format('{0}_A', 'MASTER')] }}
       - name: Test Application 2
-        run: echo ${{ secrets[format{'{0}_A', github.base_ref}] }}
+        run: echo ${{ secrets[format('{0}_A', github.base_ref)] }}
       - name: Test Application 3
-        run: echo ${{ secrets[format{'{0}_A', needs.prepare.outputs.key1}] }}
+        run: echo ${{ secrets[format('{0}_A', needs.prepare.outputs.key1)] }}
       - name: Test Application 4
-        run: echo ${{ secrets[format{'{0}_A', needs.prepare.outputs.key2}] }}
+        run: echo ${{ secrets[format('{0}_A', needs.prepare.outputs.key2)] }}
