@@ -1,0 +1,37 @@
+name: my-workflow
+
+on:
+  pull_request:
+    branches:
+      - master
+jobs:
+  prepare:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Prepare Outputs
+        id: prepare-step
+        # Sets this step's outputs, that later on will be exported as the job's outputs
+        run: |
+          echo "::set-output name=key1::github.base_ref";
+          echo "::set-output name=key2::${github.base_ref}";
+    outputs:
+      key1: steps.prepare-step.outputs.key1
+      key2: steps.prepare-step.outputs.key2
+  test:
+    needs: prepare
+    runs-on: ubuntu-20.04
+  steps:
+    - uses: actions/checkout@v2
+    - name: Print output
+      run: |
+        echo ${{ needs.prepare.outputs.key1 }}
+        echo ${{ needs.prepare.outputs.key2 }}
+    - name: Test Application
+      run: echo ${{ secrets[format{'{0}_A', 'MASTER'}] }}
+    - name: Test Application 2
+      run: echo ${{ secrets[format{'{0}_A', github.base_ref}] }}
+    - name: Test Application 3
+      run: echo ${{ secrets[format{'{0}_A', needs.prepare.outputs.key1}] }}
+    - name: Test Application 4
+      run: echo ${{ secrets[format{'{0}_A', needs.prepare.outputs.key2}] }}
