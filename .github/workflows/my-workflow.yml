@@ -9,13 +9,12 @@ jobs:
   prepare:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
       - name: Prepare Outputs
         id: prepare-step
         # Sets this step's outputs, that later on will be exported as the job's outputs
         run: |
           echo "::set-output name=key1::github.base_ref";
-          echo "::set-output name=key2::${github.base_ref}";
+          echo "::set-output name=key2::github.base_ref";
     outputs:
       key1: steps.prepare-step.outputs.key1
       key2: steps.prepare-step.outputs.key2
@@ -23,7 +22,6 @@ jobs:
     needs: prepare
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
       - name: Print output
         run: |
           echo "${{ needs.prepare.outputs.key1 }}"
