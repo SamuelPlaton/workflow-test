@@ -24,8 +24,10 @@ jobs:
     steps:
       - name: Print output
         run: |
-          echo "${{ needs.prepare.outputs.key1 }}"
-          echo "${{ needs.prepare.outputs.key2 }}"
+          echo "Ready"
+          echo ${{ needs.prepare.outputs.key1 }}
+          echo ${{ needs.prepare.outputs.key2 }}
+          echo "Done"
       - name: Test Application
         run: echo ${{ secrets[format('{0}_A', 'MASTER')] }}
       - name: Test Application 2
