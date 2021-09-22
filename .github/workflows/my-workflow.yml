@@ -20,10 +20,12 @@ jobs:
           echo ${{ github.ref }}
           echo ${GITHUB_REF##*/}
           echo "::set-output name=key1::${{ github.base_ref }}";
+          echo "::set-output name=key-dash::${{ github.base_ref }}";
           echo "::set-output name=key2::${GITHUB_REF##*/}";
           echo "::set-output name=key3::TEST";
     outputs:
       key1: ${{ steps.prepare-step.outputs.key1 }}
+      key-dash: ${{ steps.prepare-step.outputs.key-dash }}
       key2: ${{ steps.prepare-step.outputs.key2 }}
       key3: ${{ steps.prepare-step.outputs.key3 }}
   test:
@@ -36,22 +38,18 @@ jobs:
         run: |
           echo "PRETEST=ITWORKS" >> "$GITHUB_ENV"
           echo "TEST=${{ needs.prepare.outputs.key1 }}" >> "$GITHUB_ENV"
-          export TEST2=${{ needs.prepare.outputs.key1 }}
+          echo "TEST2=${{ needs.prepare.outputs.key-dash }}" >> "$GITHUB_ENV"
       - name: Print output
         run: |
           echo "Ready"
-          echo ${{ env.PRETEST }}
           echo ${{ env.TEST }}
           echo ${{ env.TEST2 }}
           echo ${{ env.WAW }}
-          if [[ ${{ env.PRETEST }} == "test-workflow" ]]; then
-            echo "YES"
-          else
-            echo "NO"
-          fi
+          echo "outputs"
           echo ${{ needs.prepare.outputs.key1 }}
           echo ${{ needs.prepare.outputs.key2 }}
           echo ${{ needs.prepare.outputs.key3 }}
+          echo ${{ needs.prepare.outputs.key-dash }}
           echo "Done"
       - name: Test Application
         run: echo ${{ secrets[format('{0}_A', 'MASTER')] }}
