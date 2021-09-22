@@ -30,7 +30,7 @@ jobs:
     needs: prepare
     runs-on: ubuntu-20.04
     env:
-      TEST: ${{ steps.prepare-step.outputs.key1 }}
+      TEST: steps.prepare-step.outputs.key1
     steps:
       - name: Print output
         run: |
