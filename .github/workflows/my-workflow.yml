@@ -29,9 +29,9 @@ jobs:
   test:
     needs: prepare
     runs-on: ubuntu-20.04
-    env:
-      TEST: "${{ steps.prepare-step.outputs.key1 }}"
     steps:
+      - name: setup env
+        run: echo "TEST=${{ steps.prepare-step.outputs.key1 }}" >> "$GITHUB_ENV"
       - name: Print output
         run: |
           echo "Ready"
