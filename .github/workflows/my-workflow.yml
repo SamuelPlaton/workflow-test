@@ -29,16 +29,21 @@ jobs:
   test:
     needs: prepare
     runs-on: ubuntu-20.04
+    env:
+      WAW: ${{ needs.prepare.outputs.key1 }}
     steps:
       - name: setup env
         run: |
           echo "PRETEST=ITWORKS" >> "$GITHUB_ENV"
-          echo "TEST=${{ steps.prepare-step.outputs.key1 }}" >> "$GITHUB_ENV"
+          echo "TEST=${{ needs.prepare.outputs.key1 }}" >> "$GITHUB_ENV"
+          export TEST2=${{ needs.prepare.outputs.key1 }}
       - name: Print output
         run: |
           echo "Ready"
           echo ${{ env.PRETEST }}
           echo ${{ env.TEST }}
+          echo ${{ env.TEST2 }}
+          echo ${{ env.WAW }}
           if [[ ${{ env.PRETEST }} == "test-workflow" ]]; then
             echo "YES"
           else
