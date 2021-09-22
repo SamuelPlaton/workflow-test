@@ -31,12 +31,15 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: setup env
-        run: echo "TEST=${{ steps.prepare-step.outputs.key1 }}" >> "$GITHUB_ENV"
+        run: |
+          echo "PRETEST=ITWORKS" >> "$GITHUB_ENV"
+          echo "TEST=${{ steps.prepare-step.outputs.key1 }}" >> "$GITHUB_ENV"
       - name: Print output
         run: |
           echo "Ready"
+          echo ${{ env.PRETEST }}
           echo ${{ env.TEST }}
-          if [[ ${{ env.TEST }} == "test-workflow" ]]; then
+          if [[ ${{ env.PRETEST }} == "test-workflow" ]]; then
             echo "YES"
           else
             echo "NO"
