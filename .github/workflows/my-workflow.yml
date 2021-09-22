@@ -31,13 +31,11 @@ jobs:
     runs-on: ubuntu-20.04
     env:
       TEST: ${{ steps.prepare-step.outputs.key1 }}
-      TEST2: ${steps.prepare-step.outputs.key1}
     steps:
       - name: Print output
         run: |
           echo "Ready"
           echo ${{ env.TEST }}
-          echo ${{ env.TEST2 }}
           if [[ ${{ env.TEST }} == "test-workflow" ]]; then
             echo "YES"
           else
