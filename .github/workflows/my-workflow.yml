@@ -52,11 +52,11 @@ jobs:
           echo ${{ needs.prepare.outputs.key-dash }}
           echo "Done"
       - name: Print if output is good 1
-        if: needs.prepare.outputs.key3 == TEST
+        if: needs.prepare.outputs.key3 == 'TEST'
         run: |
             echo "OUTPUT IS GOOD 1"
       - name: Print if output is good 2
-        if: ${{ needs.prepare.outputs.key3 }} == TEST
+        if: ${{ needs.prepare.outputs.key3 }} == 'TEST'
         run: |
           echo "OUTPUT IS GOOD 2"
       - name: Test Application
