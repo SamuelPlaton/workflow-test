@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-20.04
     env:
       TEST: ${{ steps.prepare-step.outputs.key1 }}
-      TEST2: steps.prepare-step.outputs.key1
+      TEST2: ${steps.prepare-step.outputs.key1}
     steps:
       - name: Print output
         run: |
