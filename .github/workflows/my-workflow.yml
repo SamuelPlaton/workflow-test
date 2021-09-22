@@ -51,6 +51,14 @@ jobs:
           echo ${{ needs.prepare.outputs.key3 }}
           echo ${{ needs.prepare.outputs.key-dash }}
           echo "Done"
+      - name: Print if output is good 1
+        if: needs.prepare.outputs.key3 == "TEST"
+        run: |
+            echo "OUTPUT IS GOOD 1"
+      - name: Print if output is good 2
+        if: ${{ needs.prepare.outputs.key3 }} == "TEST"
+        run: |
+          echo "OUTPUT IS GOOD 2"
       - name: Test Application
         run: echo ${{ secrets[format('{0}_A', 'MASTER')] }}
       - name: Test Application 2
