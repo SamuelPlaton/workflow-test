@@ -27,7 +27,7 @@ jobs:
       # install the dependencies
       - name: Install dependencies
         if: steps.node_modules-cache.outputs.cache-hit != 'true'
-        run: npx lerna bootstrap
+        run: yarn install
 
   test:
     needs: install
