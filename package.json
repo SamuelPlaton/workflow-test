@@ -2,7 +2,10 @@
   "name": "workflow-test",
   "private": true,
   "license": "UNLICENSED",
-  "dependencies": {
-    "cypress": "^8.7.0"
+  "workspaces": {
+    "packages": [
+      "packages/package-1",
+      "packages/package-2"
+    ]
   }
 }

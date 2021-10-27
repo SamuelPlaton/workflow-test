@@ -1,4 +1,6 @@
 .idea
-cypress/videos
+packages/package-1/cypress/videos
 node_modules
+packages/**/node_modules
+packages/**/cypress/videos
 yarn-error.log

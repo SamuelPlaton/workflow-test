@@ -1,0 +1,9 @@
+{
+  "name": "package-1",
+  "version": "1.0.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "dependencies": {
+    "cypress": "^8.7.0"
+  }
+}
