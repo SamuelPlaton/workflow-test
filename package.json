@@ -1,0 +1,11 @@
+{
+  "name": "workflow-test",
+  "private": true,
+  "license": "UNLICENSED",
+  "workspaces": {
+    "packages": [
+      "packages/package-1",
+      "packages/package-2"
+    ]
+  }
+}

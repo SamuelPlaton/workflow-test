@@ -6,45 +6,60 @@ on:
       - test-workflow
       - master
 jobs:
-  prepare:
+  # checks the dependencies can be installed
+  install:
     runs-on: ubuntu-20.04
     steps:
-      - name: Prepare Outputs
-        id: prepare-step
-        # Sets this step's outputs, that later on will be exported as the job's outputs
-        run: |
-          echo ${{ github.ref }}
-          echo ${GITHUB_REF##*/}
-          echo "::set-output name=key1::${{ github.base_ref }}";
-          echo "::set-output name=key2::github.base_ref";
-          echo "::set-output name=key3::TEST";
-    outputs:
-      key1: ${{ steps.prepare-step.outputs.key1 }}
-      key2: ${{ steps.prepare-step.outputs.key2 }}
-      key3: ${{ steps.prepare-step.outputs.key3 }}
-  test:
-    needs: prepare
+      # checkout the source code
+      - uses: actions/checkout@v2
+      # setup node
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      # install the dependencies
+      - name: Install dependencies
+        run: yarn install
+
+  test-package-1:
+    needs: install
     runs-on: ubuntu-20.04
     steps:
-      - name: Print output
-        run: |
-          echo "Ready"
-          echo ${{ needs.prepare.outputs.key1 }}
-          echo ${{ needs.prepare.outputs.key2 }}
-          echo ${{ needs.prepare.outputs.key3 }}
-          echo "Done"
-      - name: Test Application
-        run: echo ${{ secrets[format('{0}_A', 'MASTER')] }}
-      - name: Test Application 2
-        run: echo ${{ secrets[format('{0}_A', github.base_ref)] }}
-      - name: Test Application 3
-        run: echo ${{ secrets[format('{0}_A', needs.prepare.outputs.key1)] }}
-      - name: Test Application 4
-        run: echo ${{ secrets[format('{0}_A', needs.prepare.outputs.key2)] }}
-      - name: Setup env
-        run: |
-          echo "${{ format('{0}_A', needs.prepare.outputs.key1) }}"
-          echo "TEST1=${{ secrets[format('{0}_A', 'MASTER')] }}" >> "$GITHUB_ENV"
-          echo "TEST2=${{ secrets[format('{0}_A', github.base_ref)] }}" >> "$GITHUB_ENV"
-          echo "TEST3=${{ secrets[format('{0}_A', needs.prepare.outputs.key1)] }}" >> "$GITHUB_ENV"
-          echo "TEST4=${{ secrets[format('{0}_A', needs.prepare.outputs.key2)] }}" >> "$GITHUB_ENV"
+      # checkout the source code
+      - uses: actions/checkout@v2
+      # setup node
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      # cache the node_modules
+      - uses: actions/cache@v2
+        id: node_modules-cache
+        with:
+          path: node_modules
+          key: ${ runner.os }-node_modules-${{ hashFiles('yarn.lock') }}
+      # run the app-pro cypress tests
+      - name: run tests
+        uses: cypress-io/github-action@v2
+        with:
+          project: ./packages/package-1
+
+  test-package-2:
+    needs: install
+    runs-on: ubuntu-20.04
+    steps:
+      # checkout the source code
+      - uses: actions/checkout@v2
+      # setup node
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      # cache the node_modules
+      - uses: actions/cache@v2
+        id: node_modules-cache
+        with:
+          path: node_modules
+          key: ${ runner.os }-node_modules-${{ hashFiles('yarn.lock') }}
+      # run the app-pro cypress tests
+      - name: run tests
+        uses: cypress-io/github-action@v2
+        with:
+          project: ./packages/package-2
