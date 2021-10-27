@@ -41,7 +41,9 @@ jobs:
           key: ${ runner.os }-node_modules-${{ hashFiles('yarn.lock') }}
       # install the dependencies
       - name: Install dependencies
-        run: yarn install
+        run: |
+          yarn add cypress
+          yarn install
       # run the app-pro cypress tests
       - name: run tests
         uses: cypress-io/github-action@v2
