@@ -18,9 +18,7 @@ jobs:
           node-version: 14
       # install the dependencies
       - name: Install dependencies
-        run: |
-          yarn add cypress
-          yarn install
+        run: yarn install
 
   test:
     needs: install
