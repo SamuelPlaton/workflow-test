@@ -1,8 +1,5 @@
 name: my-workflow
 
-env:
-  CYPRESS_CACHE_FOLDER: ./node_modules/cypress/cache/Cypress
-
 on:
   pull_request:
     branches:
