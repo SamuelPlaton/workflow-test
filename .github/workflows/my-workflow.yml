@@ -1,8 +1,5 @@
 name: my-workflow
 
-env:
-  CYPRESS_CACHE_FOLDER: ./node_modules/cypress/cache/Cypress
-
 on:
   pull_request:
     branches:
@@ -28,6 +25,8 @@ jobs:
   test:
     needs: install
     runs-on: ubuntu-20.04
+    env:
+      CYPRESS_CACHE_FOLDER: ./node_modules/cypress/cache/Cypress
     steps:
       # checkout the source code
       - uses: actions/checkout@v2
