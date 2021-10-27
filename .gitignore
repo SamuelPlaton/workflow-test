@@ -1,0 +1,4 @@
+.idea
+cypress/videos
+node_modules
+yarn-error.log
