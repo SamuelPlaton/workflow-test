@@ -18,17 +18,8 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 14
-      # cache the node_modules
-      - uses: actions/cache@v2
-        id: node_modules-cache
-        with:
-          path: node_modules
-          key: ${ runner.os }-node_modules-${{ hashFiles('yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-node_modules-
       # install the dependencies
       - name: Install dependencies
-        if: steps.node_modules-cache.outputs.cache-hit != 'true'
         run: yarn install
 
   test:
