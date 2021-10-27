@@ -3,5 +3,8 @@ describe('Test', () => {
         it('It', () => {
             assert(true);
         });
+        it('It 2', () => {
+            assert(true);
+        });
     });
 });
